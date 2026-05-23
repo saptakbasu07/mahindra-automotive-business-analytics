@@ -1,269 +1,294 @@
-# 🚗 Mahindra Automotive SQL Business Analytics
+ Project Summary
+This project replicates a real-world data analyst workflow inside an automotive business.
+Starting from four raw datasets (orders, vehicles, customers, dealerships), it builds a complete
+analytics pipeline that answers 28 business questions across sales, customers, dealerships,
+finance, and after-sales service — then visualizes the key KPIs in an executive Power BI dashboard.
+Business context: Mahindra & Mahindra is one of India's largest vehicle manufacturers. This
+project analyzes sales performance, customer behavior, dealership operations, financing patterns,
+and service analytics — the exact work performed by DA/BI teams in the automotive industry.
 
-A comprehensive business analytics project simulating real-world Mahindra Automotive operations using PostgreSQL and advanced SQL techniques.
-
----
-
-## 📋 Table of Contents
-
-- [Project Overview](#project-overview)
-- [Dataset](#dataset)
-- [SQL Concepts](#sql-concepts-used)
-- [Business Problems](#business-problems-solved)
-- [Key Insights](#key-insights)
-- [Project Structure](#project-structure)
-- [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-- [Usage](#usage)
-- [Queries & Results](#queries--results)
-- [Author](#author)
-
----
-
-## 🎯 Project Overview
-
-This project demonstrates enterprise-level SQL analytics by analyzing Mahindra Automotive's operations across multiple business domains:
-
-- **Sales Analytics** - Revenue trends, model performance, and market segmentation
-- **Customer Analytics** - Behavior patterns, retention rates, and customer lifecycle
-- **Dealer Performance** - Delivery efficiency, sales volume, and operational metrics
-- **Financing Analysis** - Loan dependency by vehicle category and payment patterns
-- **EV Growth Trends** - Electric vehicle adoption and market share growth
-- **Delivery Delay Analysis** - Logistics performance and SLA compliance
-- **Service Analytics** - Maintenance patterns, service frequency, and customer satisfaction
-
----
-
-## 📊 Dataset
-
-The project includes normalized tables representing real-world automotive operations:
-
-| Table | Description |
-|-------|-------------|
-| **Customers** | Customer demographics, contact info, and registration date |
-| **Orders** | Sales transactions with order status and pricing |
-| **Vehicles** | Vehicle models, categories (SUV, Sedan, Hatchback), specs |
-| **Dealerships** | Dealer locations, regions, and performance metrics |
-| **Financing** | Loan records, terms, interest rates, and approval status |
-| **Service Records** | Service dates, issues, costs, and technician info |
-| **Test Drives** | Test drive bookings and customer conversions |
-
----
-
-## 🛠️ SQL Concepts Used
-
-- **JOINs** - INNER, LEFT, RIGHT, FULL OUTER joins for multi-table analysis
-- **CTEs (Common Table Expressions)** - Recursive and non-recursive queries for complex logic
-- **Window Functions** - ROW_NUMBER(), RANK(), LAG(), LEAD() for advanced analytics
-- **Aggregations** - GROUP BY, HAVING, multiple aggregation functions
-- **Ranking Functions** - Top-N queries and percentile analysis
-- **Cohort Analysis** - Customer lifecycle and retention tracking
-- **Retention Analysis** - Repeat purchase patterns and churn prediction
-- **Time-Series Analytics** - Trend analysis, moving averages, and forecasting
-
----
-
-## 💡 Business Problems Solved
-
-1. **Which vehicle models generate the highest revenue?**
-   - Revenue ranking by model with delivery status filtering
-
-2. **Which dealers have the highest delivery delays?**
-   - SLA breach analysis and dealer performance comparison
-
-3. **Which states contribute the highest sales?**
-   - Geographic revenue distribution and market penetration
-
-4. **Which customers are repeat buyers?**
-   - Customer segmentation and loyalty analysis
-
-5. **Which vehicle categories depend most on financing?**
-   - Financing adoption rates by category and price range
-
-6. **Which models require frequent servicing?**
-   - Service frequency analysis and maintenance cost prediction
-
----
-
-## 🔍 Key Insights
-
-| Insight | Finding |
-|---------|---------|
-| **Top Revenue Generator** | SUVs generated the highest overall revenue |
-| **EV Market Growth** | Electric vehicle sales showed strong yearly growth trends |
-| **Delivery Performance** | Some dealerships exceeded 30-day average delivery delays |
-| **Financing Trends** | Premium vehicles showed 65%+ financing dependency |
-| **Customer Retention** | Strong retention through service engagement programs |
-
----
-
-## 📁 Project Structure
-
-```
-mahindra-automotive-business-analytics/
-├── data/                          # Dataset files
-│   ├── customers.csv
-│   ├── orders.csv
-│   ├── vehicles.csv
-│   ├── dealerships.csv
-│   ├── financing.csv
-│   ├── service_records.csv
-│   └── test_drives.csv
+🗂️ Project Structure
+bashmahindra-automotive-business-analytics/
 │
-├── sql/                           # SQL query files
-│   ├── 01_schema_setup.sql        # Database and table creation
-│   ├── 02_data_import.sql         # Data loading scripts
-│   ├── 03_sales_analytics.sql     # Revenue and sales queries
-│   ├── 04_customer_analytics.sql  # Customer behavior queries
-│   ├── 05_dealer_performance.sql  # Dealer metrics
-│   ├── 06_financing_analysis.sql  # Financing patterns
-│   └── 07_advanced_queries.sql    # Complex analytics queries
+├── 📁 data/
+│   ├── customers.csv          # Demographics, city, income group, customer type
+│   ├── vehicles.csv           # Models, categories, fuel types, segments
+│   ├── orders.csv             # Transactions: price, status, dates, payment type
+│   └── dealerships.csv        # Dealer info, locations, sales targets
 │
-├── screenshots/                   # Query results and visualizations
+├── 📁 sql/
+│   ├── SALES_ANALYTICS.sql          # 5 queries — revenue, models, trends, geography
+│   ├── CUSTOMER_ANALYTICS.sql       # 5 queries — CLV, repeat buyers, demographics
+│   ├── DEALERSHIP_ANALYTICS.sql     # 4 queries — performance, delays, targets
+│   ├── FINANCE_ANALYTICS.sql        # 4 queries — loans, EMI, defaults, dependency
+│   ├── SERVICE_ANALYTICS.sql        # 4 queries — servicing, satisfaction, retention
+│   └── ADVANCED_SQL_ANALYTICS.sql   # 6 queries — cohorts, Pareto, EV growth, running totals
 │
-├── README.md                      # Project documentation
-└── .gitignore
-```
+├── 📁 powerbi/
+│   └── Mahindra_Executive_Dashboard.pbix
+│
+├── 📁 screenshots/
+│   └── executive_dashboard.png
+│
+└── README.md
 
----
+🎯 28 Business Questions Answered
+#Business QuestionModuleSQL Concept1What is total business revenue?SalesAggregation + Filter2How many vehicles were sold?SalesCOUNT + Filter3Which vehicle model generates highest revenue?SalesCTE + DENSE_RANK4Which vehicle category sells the most?SalesCTE + Window Function5What is monthly revenue trend with MoM growth %?SalesCTE + LAG6Which states generate the highest revenue?SalesMulti-JOIN + DENSE_RANK7What is average customer age by vehicle category?Customer3-table JOIN + AVG8Which income groups buy premium vehicles?CustomerJOIN + GROUP BY + LIMIT9How many customers are repeat buyers?CustomerSubquery + HAVING10Who are the top 10 highest-value customers? (CLV)CustomerCTE + DENSE_RANK11How does Urban vs Rural revenue compare?CustomerJOIN + CASE filter12Which dealer generates highest revenue?DealershipCTE + ROW_NUMBER13Which dealers have delivery delays above 30 days?DealershipCTE chain + Date arithmetic14Which cities have the highest cancellation rates?DealershipCASE + DENSE_RANK15Which dealers achieved their sales targets?DealershipJOIN + CASE WHEN16What percentage of customers use loans?FinanceCASE + Ratio17What is the loan default rate?FinanceConditional aggregation18What is average EMI by vehicle category?Finance3-JOIN + AVG + ROUND19Which vehicle categories are most loan-dependent?FinanceLoan vs revenue ratio20Which vehicle models require the most servicing?ServiceJOIN + COUNT + ORDER BY21What is the average service cost by model?ServiceJOIN + AVG22Which dealerships have the lowest satisfaction scores?ServiceCTE + DENSE_RANK23What is the customer retention rate through servicing?ServiceCTE + HAVING + Subquery24What is the 2025 month-over-month growth rate?AdvancedLAG + EXTRACT + % calc25Which are the top 3 revenue models per state?AdvancedPARTITION BY + DENSE_RANK26Which monthly cohorts retained customers longest?AdvancedAGE() + DATE_TRUNC + cohort JOIN27What is the running cumulative revenue by month?AdvancedSUM() OVER (ORDER BY)28Which 20% of models drive 80% of revenue? (Pareto)AdvancedCumulative SUM + % threshold29What is Mahindra EV adoption growth year-over-year?AdvancedLAG + NULLIF + YoY %
 
-## 💻 Tech Stack
+🧠 SQL Showcase — 6 Key Queries
+1. Month-over-Month Revenue Growth — LAG Window Function
+sqlWITH rev AS (
+    SELECT
+        DATE_TRUNC('month', order_date)        AS month,
+        ROUND(SUM(final_price), 0)             AS total_revenue_month
+    FROM orders
+    GROUP BY 1
+)
+SELECT
+    TO_CHAR(month, 'MM-YYYY')                  AS monthly,
+    total_revenue_month,
+    LAG(total_revenue_month) OVER (
+        ORDER BY TO_CHAR(month, 'MM-YYYY')
+    )                                          AS previous_month_revenue,
+    ROUND(
+        (total_revenue_month - LAG(total_revenue_month) OVER (
+            ORDER BY TO_CHAR(month, 'MM-YYYY'))
+        ) / LAG(total_revenue_month) OVER (
+            ORDER BY TO_CHAR(month, 'MM-YYYY')
+        ) * 100.0, 1
+    )                                          AS monthly_growth_pct
+FROM rev;
 
-| Component | Technology |
-|-----------|-----------|
-| **Database** | PostgreSQL 12+ |
-| **Query Language** | SQL (Standard + PostgreSQL Extensions) |
-| **Version Control** | Git & GitHub |
-| **Tool** | pgAdmin / DBeaver / CLI |
+💡 Business value: Pinpoints months where revenue declined — triggers investigation into supply, demand, or pricing factors.
 
----
 
-## 🚀 Getting Started
+2. Top 3 Models Per State — PARTITION BY
+sqlWITH revenue AS (
+    SELECT
+        c.state,
+        v.model_name,
+        ROUND(SUM(o.final_price)::NUMERIC, 1)  AS total_revenue
+    FROM orders o
+    JOIN customers c USING (customer_id)
+    JOIN vehicles v  USING (vehicle_id)
+    WHERE o.order_status = 'Delivered'
+    GROUP BY 1, 2
+)
+SELECT * FROM (
+    SELECT *,
+        DENSE_RANK() OVER (
+            PARTITION BY state
+            ORDER BY total_revenue DESC
+        ) AS ranking
+    FROM revenue
+) t
+WHERE ranking <= 3;
 
-### Prerequisites
+💡 Business value: Enables state-level marketing — each region gets product campaigns based on what actually sells there.
 
-- PostgreSQL 12 or higher installed
-- A SQL IDE (pgAdmin, DBeaver, or psql CLI)
-- Git for version control
 
-### Installation
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/saptakbasu07/mahindra-automotive-business-analytics.git
-   cd mahindra-automotive-business-analytics
-   ```
-
-2. **Create a new database:**
-   ```sql
-   CREATE DATABASE mahindra_analytics;
-   ```
-
-3. **Run the schema setup:**
-   ```bash
-   psql -U postgres -d mahindra_analytics -f sql/01_schema_setup.sql
-   ```
-
-4. **Import the data:**
-   ```bash
-   psql -U postgres -d mahindra_analytics -f sql/02_data_import.sql
-   ```
-
----
-
-## 📖 Usage
-
-### Running Queries
-
-Execute individual analysis queries:
-
-```bash
-psql -U postgres -d mahindra_analytics -f sql/03_sales_analytics.sql
-```
-
-Or connect interactively and paste queries:
-
-```bash
-psql -U postgres -d mahindra_analytics
-```
-
-### Example: Finding Top Revenue-Generating Vehicles
-
-```sql
-WITH revenue AS (
-    SELECT 
-        vehicle_id,
-        SUM(final_price) AS total_revenue,
-        COUNT(*) AS units_sold
+3. Customer Lifetime Value — Top 10
+sqlWITH clv AS (
+    SELECT
+        customer_id,
+        ROUND(SUM(final_price), 0)             AS total_revenue
     FROM orders
     WHERE order_status = 'Delivered'
-    GROUP BY vehicle_id
+    GROUP BY 1
+)
+SELECT customer_id, customer_name, city, total_revenue
+FROM (
+    SELECT
+        c.customer_id, c.customer_name, c.city,
+        r.total_revenue,
+        DENSE_RANK() OVER (
+            ORDER BY total_revenue DESC
+        )                                      AS ranking
+    FROM clv r
+    JOIN customers c USING (customer_id)
+) t
+WHERE ranking <= 10;
+
+💡 Business value: Identifies VIP customers for loyalty programs, priority service, and retention campaigns.
+
+
+4. Cohort Retention Analysis
+sqlWITH cohort AS (
+    SELECT
+        customer_id,
+        DATE_TRUNC('month', MIN(order_date))   AS cohort_month
+    FROM orders
+    WHERE order_status = 'Delivered'
+      AND EXTRACT('YEAR' FROM order_date) = 2024
+    GROUP BY 1
+),
+dated AS (
+    SELECT
+        c.customer_id, c.cohort_month,
+        (EXTRACT(YEAR  FROM AGE(DATE_TRUNC('month', o.order_date), c.cohort_month)) * 12
+       + EXTRACT(MONTH FROM AGE(DATE_TRUNC('month', o.order_date), c.cohort_month))
+        )                                      AS months_since_cohort
+    FROM orders o
+    JOIN cohort c USING (customer_id)
+)
+SELECT
+    TO_CHAR(cohort_month, 'MM-YYYY')           AS cohort_month,
+    months_since_cohort,
+    COUNT(DISTINCT customer_id)                AS retained_customers
+FROM dated
+WHERE months_since_cohort > 0
+GROUP BY 1, 2
+ORDER BY 1, 2;
+
+💡 Business value: Shows which acquisition campaigns produced the most loyal long-term customers.
+
+
+5. Pareto Analysis — 80/20 Revenue Rule
+sqlWITH total AS (
+    SELECT
+        vehicle_id,
+        SUM(final_price)                       AS revenue,
+        ROUND(SUM(final_price) * 100 /
+            (SELECT SUM(final_price) FROM orders
+             WHERE order_status = 'Delivered'), 2
+        )                                      AS contribution_pct
+    FROM orders
+    WHERE order_status = 'Delivered'
+    GROUP BY 1
+),
+cumulative AS (
+    SELECT vehicle_id, revenue, contribution_pct,
+        SUM(revenue) OVER (ORDER BY revenue DESC)           AS running_total,
+        ROUND(SUM(revenue) OVER (ORDER BY revenue DESC)
+            * 100 / SUM(revenue) OVER (), 2)                AS cumulative_pct
+    FROM total
+)
+SELECT vehicle_id, contribution_pct, revenue, running_total, cumulative_pct
+FROM cumulative
+WHERE cumulative_pct <= 80
+ORDER BY revenue DESC;
+
+💡 Business value: Identifies which vehicle models to protect — the minority driving the majority of revenue.
+
+
+6. EV Adoption YoY Growth — LAG + NULLIF
+sqlWITH ev_sales AS (
+    SELECT
+        EXTRACT('YEAR' FROM o.order_date)      AS year,
+        COUNT(o.order_id)                      AS total_ev_sales
+    FROM orders o
+    JOIN vehicles v USING (vehicle_id)
+    WHERE o.order_status = 'Delivered'
+      AND v.vehicle_category = 'EV'
+    GROUP BY 1
+)
+SELECT
+    year, total_ev_sales,
+    LAG(total_ev_sales) OVER (ORDER BY year)   AS prev_year_ev_sales,
+    ROUND(
+        (total_ev_sales - LAG(total_ev_sales) OVER (ORDER BY year))::DECIMAL
+        / NULLIF(LAG(total_ev_sales) OVER (ORDER BY year), 0) * 100, 1
+    )                                          AS yoy_growth_pct
+FROM ev_sales;
+
+💡 Business value: Quantifies Mahindra's EV transition speed — a direct boardroom metric for strategy and investment.
+
+
+📊 Power BI Executive Dashboard
+Key KPIs
+KPIValueBusiness SignalTotal Revenue₹19.36 BillionFull fleet performance baselineTotal Orders15,000Overall demand volumeDelivered Orders12,000Operational fulfillment countDelivery Rate79.8%Fulfillment health indicatorCancellation Rate10.5%Revenue leakage — ~₹2bn at riskAverage Order Value₹1.29 MillionPer-vehicle revenue benchmarkEV Revenue Share29.6%Electric transition momentumDiesel Revenue Share55.9%ICE portfolio still dominant
+DAX Measures
+daxDelivery Rate % =
+DIVIDE(
+    CALCULATE(COUNTROWS(orders), orders[order_status] = "Delivered"),
+    COUNTROWS(orders)
 )
 
-SELECT 
-    v.model_name,
-    v.category,
-    r.total_revenue,
-    r.units_sold,
-    ROUND(r.total_revenue / r.units_sold::NUMERIC, 2) AS avg_price
-FROM revenue r
-JOIN vehicles v ON r.vehicle_id = v.vehicle_id
-ORDER BY total_revenue DESC
-LIMIT 10;
-```
+Cancellation Rate % =
+DIVIDE(
+    CALCULATE(COUNTROWS(orders), orders[order_status] = "Cancelled"),
+    COUNTROWS(orders)
+)
 
----
+EV Revenue % =
+DIVIDE(
+    CALCULATE(SUM(orders[final_price]), vehicles[fuel_type] = "Electric"),
+    SUM(orders[final_price])
+)
 
-## 📊 Queries & Results
+Diesel Revenue % =
+DIVIDE(
+    CALCULATE(SUM(orders[final_price]), vehicles[fuel_type] = "Diesel"),
+    SUM(orders[final_price])
+)
 
-Key analytical queries included in the project:
+Petrol Revenue % =
+DIVIDE(
+    CALCULATE(SUM(orders[final_price]), vehicles[fuel_type] = "Petrol"),
+    SUM(orders[final_price])
+)
+Dashboard Features
 
-- **Sales Performance**: Top models, seasonal trends, revenue forecasting
-- **Customer Insights**: Segmentation, lifetime value, churn prediction
-- **Operational Metrics**: Dealer efficiency, delivery times, inventory management
-- **Financial Analysis**: Financing penetration, payment defaults, profitability
-- **Trend Analysis**: YoY growth, market share, competitive positioning
+✅ Executive KPI cards — color-coded green (healthy) / red (alert)
+✅ Monthly revenue trend with year slicer (2023–2026)
+✅ Revenue by vehicle category — EV leads at ~₹6bn
+✅ Top vehicle models by revenue — XEV 9e, BE 6, XUV700
+✅ Order status breakdown — Delivered / Cancelled / Pending
+✅ Fuel-type segmentation — Diesel 55.9% / EV 29.6% / Petrol 14.5%
+✅ Interactive slicers for fuel type and year
 
-See the `sql/` directory for complete query implementations.
 
----
+🔍 Key Business Insights
+📌  EV is the #1 revenue category at ~₹6bn — Mahindra's electric
+    portfolio is the largest revenue driver by category, ahead of SUVs.
 
-## 🎓 Learning Outcomes
+📌  Diesel still dominates fuel-type revenue at 55.9%, but EV at
+    29.6% signals rapid transition. The crossover is a key metric
+    to track over the next 2–3 years.
 
-This project demonstrates:
+📌  10.5% cancellation rate = ~1,575 lost orders. At ₹1.29M average
+    order value, this represents ~₹2bn in annual revenue leakage.
 
-✅ Enterprise SQL design and optimization  
-✅ Business analytics problem-solving  
-✅ Real-world data modeling  
-✅ Complex query development  
-✅ Performance optimization techniques  
-✅ Documentation best practices  
+📌  XEV 9e leads all models at ~₹3bn, followed by BE 6 — both new
+    EV launches confirming strong product-market fit for Mahindra Electric.
 
----
+📌  Cohort analysis identifies which acquisition months generated the
+    most loyal customers — directly informs campaign budget allocation.
 
-## 📝 License
+📌  Pareto analysis confirms 80/20 rule holds — a small model portfolio
+    drives the majority of revenue, guiding production prioritization.
 
-This project is open source and available for educational purposes.
+📈 Analytics Coverage
+ModuleFileQueriesKey ConceptsSalesSALES_ANALYTICS.sql5CTE, LAG, DENSE_RANK, multi-JOINCustomerCUSTOMER_ANALYTICS.sql5CLV, DENSE_RANK, HAVING, 3-table JOINDealershipDEALERSHIP_ANALYTICS.sql4ROW_NUMBER, date arithmetic, CASE WHENFinanceFINANCE_ANALYTICS.sql4Conditional aggregation, ratio analysisServiceSERVICE_ANALYTICS.sql4DENSE_RANK, retention subqueryAdvancedADVANCED_SQL_ANALYTICS.sql6PARTITION BY, AGE(), SUM OVER, NULLIF, ParetoTotal6 files28Window functions, CTEs, cohorts, running totals
 
----
+🛠️ Tech Stack
+ToolPurposePostgreSQL 16Primary database and query engineSQL28 business analytics queries across 6 modulesPower BI DesktopExecutive KPI dashboardDAXCalculated measures for KPI reportingPower QueryData transformation and ETLGitHubVersion control and portfolio hosting
 
-## 👨‍💻 Author
+🚀 How to Run
+1. Clone the repository
+bashgit clone https://github.com/saptakbasu07/mahindra-automotive-business-analytics.git
+cd mahindra-automotive-business-analytics
+2. Set up PostgreSQL
+sqlCREATE DATABASE mahindra_analytics;
+\c mahindra_analytics
 
-**Saptak Basu**
+\COPY customers   FROM 'data/customers.csv'   CSV HEADER;
+\COPY vehicles    FROM 'data/vehicles.csv'    CSV HEADER;
+\COPY orders      FROM 'data/orders.csv'      CSV HEADER;
+\COPY dealerships FROM 'data/dealerships.csv' CSV HEADER;
+3. Run SQL modules
+bashpsql -d mahindra_analytics -f sql/SALES_ANALYTICS.sql
+psql -d mahindra_analytics -f sql/CUSTOMER_ANALYTICS.sql
+psql -d mahindra_analytics -f sql/DEALERSHIP_ANALYTICS.sql
+psql -d mahindra_analytics -f sql/FINANCE_ANALYTICS.sql
+psql -d mahindra_analytics -f sql/SERVICE_ANALYTICS.sql
+psql -d mahindra_analytics -f sql/ADVANCED_SQL_ANALYTICS.sql
+4. Open the Power BI dashboard
+1. Open Power BI Desktop
+2. File → Open → powerbi/Mahindra_Executive_Dashboard.pbix
+3. Update data source path if prompted
+4. Click Refresh All
 
-- GitHub: [@saptakbasu07](https://github.com/saptakbasu07)
-- Project: [Mahindra Automotive Business Analytics](https://github.com/saptakbasu07/mahindra-automotive-business-analytics)
+👤 Author
+Saptak Basu — BCA Student | Aspiring Data Analyst
 
----
-
-## 📞 Support & Contributions
-
-Have suggestions or found an issue? Feel free to:
-- Open a GitHub issue
-- Submit a pull request
-- Contact the author
-
----
-
-**Last Updated**: May 2026  
-**Status**: Active & Maintained
