@@ -1,1 +1,1 @@
-Project screenshots and SQL outputs.
+Project screenshots, SQL outputs and PowerBi Dashboard.
